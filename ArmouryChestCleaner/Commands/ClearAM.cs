@@ -16,7 +16,7 @@ namespace ArmouryChestCleaner.Commands
         public const string CommandName = "/clearam";
         public const string CommandUsage = $"Usage: {CommandName} <all|mainhand|head|body|hands|legs|feets|ear|neck|wrist|rings>";
 
-
+        private readonly ArmouryChestRemoverUseCase armouryChestRemoverUseCase = new();
 
         public string GetCommandName()
         {
@@ -99,11 +99,8 @@ namespace ArmouryChestCleaner.Commands
 
         private void RunClearArmouryChestCommand(List<GameInventoryType> inventoryTypeToClear)
         {
-            var sheetsUtils = SheetsUtils.GetOrCreate();
             foreach (var inventoryType in inventoryTypeToClear)
-            {
-                new ArmouryChestRemoverUseCase(GameInventoryType: inventoryType, sheetsUtils: sheetsUtils).Execute();
-            }
+                armouryChestRemoverUseCase.Execute(inventoryType);
         }
     }
 }

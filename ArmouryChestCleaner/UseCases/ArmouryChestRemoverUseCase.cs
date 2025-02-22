@@ -11,19 +11,11 @@ namespace ArmouryChestCleaner.UseCases
 {
     class ArmouryChestRemoverUseCase
     {
-        private readonly GameInventoryType gameInventoryTypeToClear;
-        private readonly SheetsUtils sheetsUtils;
 
-        public ArmouryChestRemoverUseCase(GameInventoryType GameInventoryType,SheetsUtils sheetsUtils)
+        public bool Execute(GameInventoryType gameInventoryTypeToClear)
         {
-            gameInventoryTypeToClear = GameInventoryType;
-            this.sheetsUtils = sheetsUtils;
-        }
-
-        public bool Execute()
-        {
-            var armoryItemList = GetArmoryItem();
-            var gearSetItemList = GetGearSetItemList();
+            var armoryItemList = GetArmoryItem(gameInventoryTypeToClear);
+            var gearSetItemList = GetGearSetItemList(gameInventoryTypeToClear);
             Log.LogInfo($"For Armoury:[{gameInventoryTypeToClear}], " +
                 $"Item found in armoury:[{armoryItemList.Count}], " +
                 $"Item found in gear set:[{gearSetItemList.Count}]");
@@ -35,7 +27,7 @@ namespace ArmouryChestCleaner.UseCases
             {
                 foreach (var amouryItemInGearSetId in amouryItemInGearSetIdList)
                 {
-                    var isItemMoved = MoveItemToInventory(amouryItemInGearSetId);
+                    var isItemMoved = MoveItemToInventory(gameInventoryTypeToClear, amouryItemInGearSetId);
                     if (!isItemMoved)
                     {
                         Log.LogInfo($"Unable to move item [{amouryItemInGearSetId.ItemId}] to inventory", true);
@@ -65,7 +57,7 @@ namespace ArmouryChestCleaner.UseCases
             return result;
         }
 
-        private List<GameInventoryItem> GetArmoryItem()
+        private List<GameInventoryItem> GetArmoryItem(GameInventoryType gameInventoryTypeToClear)
         {
             List<GameInventoryItem> listOfItemId = [];
             var gameInventoryItemsListForType = Svc.GameInventory.GetInventoryItems(gameInventoryTypeToClear);
@@ -79,7 +71,7 @@ namespace ArmouryChestCleaner.UseCases
             return listOfItemId;
         }
 
-        private List<uint> GetGearSetItemList()
+        private List<uint> GetGearSetItemList(GameInventoryType gameInventoryTypeToClear)
         {
             List<uint> listItemIdForInventoryType = [];
             unsafe
@@ -113,7 +105,7 @@ namespace ArmouryChestCleaner.UseCases
             return listItemIdForInventoryType;
         }
 
-        private unsafe bool MoveItemToInventory(GameInventoryItem gameInventoryItem)
+        private unsafe bool MoveItemToInventory(GameInventoryType gameInventoryTypeToClear, GameInventoryItem gameInventoryItem)
         {
             var itemNameStr = GetItemInfoFromSheets(gameInventoryItem.ItemId)
                 ?.Name.ToString() 
@@ -141,6 +133,7 @@ namespace ArmouryChestCleaner.UseCases
 
         private Item? GetItemInfoFromSheets(uint itemId)
         {
+            var sheetsUtils = SheetsUtils.GetOrCreate();
             var normalizeItemId = itemId.NormalizeItemId();
             if (normalizeItemId <= 0)
                 return null;
