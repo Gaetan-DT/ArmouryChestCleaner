@@ -59,7 +59,7 @@ jobs:
         tag_name: v${{ env.RELEASE_VERSION }}
         prerelease: false
         append_body: true
-        body_path: .github/release-notices.md
+        body_path: .github/release-note.md
         generate_release_notes: true
         fail_on_unmatched_files: true
     - name: Commit repo.json
