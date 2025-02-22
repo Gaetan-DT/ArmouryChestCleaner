@@ -30,13 +30,13 @@ public sealed class Plugin : IDalamudPlugin
     [PluginService] internal static IAddonEventManager AddonEventManager { get; private set; } = null!;
     [PluginService] internal static IAddonLifecycle AddonLifecycle { get; private set; } = null!;
 
-    private const string CommandName = "/clearam";
-
     public Configuration Configuration { get; init; }
 
     public readonly WindowSystem WindowSystem = new("ArmouryChestCleaner");
     private ConfigWindow ConfigWindow { get; init; }
     private MainWindow MainWindow { get; init; }
+
+    private List<ICommand> commandsList = [];
 
     public Plugin(IDalamudPluginInterface pluginInterface)
     {
@@ -53,7 +53,8 @@ public sealed class Plugin : IDalamudPlugin
         WindowSystem.AddWindow(ConfigWindow);
         WindowSystem.AddWindow(MainWindow);
 
-        CommandHelper.RegisterCommands(CommandManager);
+        commandsList = CommandHelper.BuildCommands();
+        CommandHelper.RegisterCommands(CommandManager, commandsList);
 
         PluginInterface.UiBuilder.Draw += DrawUI;
 
@@ -73,7 +74,8 @@ public sealed class Plugin : IDalamudPlugin
         ConfigWindow.Dispose();
         MainWindow.Dispose();
 
-        CommandManager.RemoveHandler(CommandName);
+        CommandHelper.DisposeCommands(CommandManager, commandsList);
+        commandsList = [];
     }
 
     private unsafe void OnDropDownClick(AddonEventType type, IntPtr addon, IntPtr node)

@@ -13,10 +13,16 @@ namespace ArmouryChestCleaner.Commands
             ];
         }
 
-        public static void RegisterCommands(ICommandManager commandManager)
+        public static void RegisterCommands(ICommandManager commandManager, List<ICommand> commands)
         {
-            foreach (var command in BuildCommands())
+            foreach (var command in commands)
                 commandManager.AddHandler(command.GetCommandName(), command.CreateCommandInfo());
+        }
+
+        public static void DisposeCommands(ICommandManager commandManager, List<ICommand> commands)
+        {
+            foreach (var command in commands)
+                commandManager.RemoveHandler(command.GetCommandName());
         }
     }
 }

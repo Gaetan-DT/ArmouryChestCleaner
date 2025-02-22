@@ -1,4 +1,5 @@
 using ArmouryChestCleaner.UseCases;
+using ArmouryChestCleaner.Windows;
 using Dalamud.Game.Command;
 using Dalamud.Game.Inventory;
 using Dalamud.Plugin.Services;
@@ -59,6 +60,7 @@ namespace ArmouryChestCleaner.Commands
                     else
                     {
                         Svc.Chat.Print($"Invalid arguments. {CommandUsage}");
+                        
                     }
                     break;
                 default:
