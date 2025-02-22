@@ -1,3 +1,4 @@
+using ArmouryChestCleaner.Windows;
 using Dalamud.Plugin.Services;
 using System.Collections.Generic;
 
@@ -5,11 +6,13 @@ namespace ArmouryChestCleaner.Commands
 {
     public static class CommandHelper
     {
-        public static List<ICommand> BuildCommands()
+        public static List<ICommand> BuildCommands(
+            MainWindow mainWindow,
+            ConfigWindow configWindow)
         {
             return
             [
-                new ClearAMCommand()
+                new ClearAMCommand(mainWindow, configWindow)
             ];
         }
 

@@ -32,6 +32,18 @@ namespace ArmouryChestCleaner.Commands
 
         private readonly ArmouryChestRemoverUseCase armouryChestRemoverUseCase = new();
 
+        public MainWindow mainWindow;
+        public ConfigWindow configWindow;
+
+
+        public ClearAMCommand(
+            MainWindow mainWindow,
+            ConfigWindow configWindow)
+        {
+            this.mainWindow = mainWindow;
+            this.configWindow = configWindow;
+        }
+
         public string GetCommandName()
         {
             return CommandName;
@@ -51,7 +63,11 @@ namespace ArmouryChestCleaner.Commands
             switch (command)
             {
                 case CommandName:
-                    if (ExtractArmouryToClearFromArgs(args, out var inventoryTypeToClear))
+                    if (args == "")
+                    {
+                        mainWindow.Toggle();
+                    }
+                    else if (ExtractArmouryToClearFromArgs(args, out var inventoryTypeToClear))
                     {
                         Svc.Log.Info($"Clearing armoury chest: {string.Join(", ", inventoryTypeToClear)}");
                         Svc.Chat.Print($"Clearing armoury chest: {string.Join(", ", inventoryTypeToClear)}");
@@ -60,7 +76,6 @@ namespace ArmouryChestCleaner.Commands
                     else
                     {
                         Svc.Chat.Print($"Invalid arguments. {CommandUsage}");
-                        
                     }
                     break;
                 default:

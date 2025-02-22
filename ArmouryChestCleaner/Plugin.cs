@@ -45,7 +45,7 @@ public sealed class Plugin : IDalamudPlugin
         WindowSystem.AddWindow(ConfigWindow);
         WindowSystem.AddWindow(MainWindow);
 
-        commandsList = CommandHelper.BuildCommands();
+        commandsList = CommandHelper.BuildCommands(MainWindow, ConfigWindow);
         CommandHelper.RegisterCommands(CommandManager, commandsList);
 
         PluginInterface.UiBuilder.Draw += DrawUI;
