@@ -12,6 +12,7 @@ using ECommons.Logging;
 using ECommons;
 using FFXIVClientStructs.FFXIV.Component.GUI;
 using Dalamud.Game.Addon.Events;
+using ArmouryChestCleaner.Commands;
 
 namespace ArmouryChestCleaner;
 
@@ -28,10 +29,6 @@ public sealed class Plugin : IDalamudPlugin
     [PluginService] internal static IPluginLog Log { get; private set; } = null!;
     [PluginService] internal static IAddonEventManager AddonEventManager { get; private set; } = null!;
     [PluginService] internal static IAddonLifecycle AddonLifecycle { get; private set; } = null!;
-    
-    
-
-    private readonly SheetsUtils sheetsUtils = new SheetsUtils(DataManager);
 
     private const string CommandName = "/clearam";
 
@@ -56,10 +53,7 @@ public sealed class Plugin : IDalamudPlugin
         WindowSystem.AddWindow(ConfigWindow);
         WindowSystem.AddWindow(MainWindow);
 
-        CommandManager.AddHandler(CommandName, new CommandInfo(OnCommand)
-        {
-            HelpMessage = "Usage: /clearam <all|mainhand|head|body|hands|legs|feets|ear|neck|wrist|rings>"
-        });
+        CommandHelper.RegisterCommands(CommandManager);
 
         PluginInterface.UiBuilder.Draw += DrawUI;
 
@@ -82,73 +76,6 @@ public sealed class Plugin : IDalamudPlugin
         CommandManager.RemoveHandler(CommandName);
     }
 
-    private void OnCommand(string command, string args)
-    {
-        // in response to the slash command, just toggle the display status of our main ui
-        //ToggleMainUI();
-        PluginManager.Info($"Command: {command}");
-        switch (command)
-        {
-            case CommandName:
-                if (ExtractArmouryToClearFromArgs(args, out List<GameInventoryType> inventoryTypeToClear))
-                {
-                    PluginManager.Info($"Clearing armoury chest: {string.Join(", ", inventoryTypeToClear)}");
-                    ChatGui.Print($"Clearing armoury chest: {string.Join(", ", inventoryTypeToClear)}");
-                    RunClearArmouryChestCommand(inventoryTypeToClear);
-                } else
-                {
-                    ChatGui.Print("Invalid arguments. Usage: /clearam <all|mainhand|head|body|hands|legs|feets|ear|neck|wrist|rings>");
-                }
-                    break;
-            default:
-                ChatGui.Print($"Unknown command: {command} : {args}");
-                break;
-        }
-    }
-
-    private bool ExtractArmouryToClearFromArgs(string args, out List<GameInventoryType> inventoryTypeToClear)
-    {
-        inventoryTypeToClear = new List<GameInventoryType>();
-        var mapArgInventoryType = new Dictionary<string, GameInventoryType>()
-        {
-            { "mainhand", GameInventoryType.ArmoryMainHand },
-            { "head", GameInventoryType.ArmoryHead },
-            { "body", GameInventoryType.ArmoryBody },
-            { "hands", GameInventoryType.ArmoryHands },
-            { "legs", GameInventoryType.ArmoryLegs },
-            { "feets", GameInventoryType.ArmoryFeets },
-            { "ear", GameInventoryType.ArmoryEar },
-            { "neck", GameInventoryType.ArmoryNeck },
-            { "wrist", GameInventoryType.ArmoryWrist },
-            { "rings", GameInventoryType.ArmoryRings }
-        };
-
-        if (args.Contains("all"))
-        {
-            inventoryTypeToClear.Add(GameInventoryType.ArmoryMainHand);
-            inventoryTypeToClear.Add(GameInventoryType.ArmoryHead);
-            inventoryTypeToClear.Add(GameInventoryType.ArmoryBody);
-            inventoryTypeToClear.Add(GameInventoryType.ArmoryHands);
-            inventoryTypeToClear.Add(GameInventoryType.ArmoryLegs);
-            inventoryTypeToClear.Add(GameInventoryType.ArmoryFeets);
-            inventoryTypeToClear.Add(GameInventoryType.ArmoryEar);
-            inventoryTypeToClear.Add(GameInventoryType.ArmoryNeck);
-            inventoryTypeToClear.Add(GameInventoryType.ArmoryWrist);
-            inventoryTypeToClear.Add(GameInventoryType.ArmoryRings);
-            return true;
-        }
-
-        foreach (var inventoryType in mapArgInventoryType)
-        {
-            if (args.Contains(inventoryType.Key))
-            {
-                inventoryTypeToClear.Add(inventoryType.Value);
-            }
-        }
-
-        return inventoryTypeToClear.Count > 0;
-    }
-
     private unsafe void OnDropDownClick(AddonEventType type, IntPtr addon, IntPtr node)
     {
         PluginLog.Information($"OnDropDownClick call type={type} addon={addon} node={node}");
@@ -168,14 +95,6 @@ public sealed class Plugin : IDalamudPlugin
             case AddonEventType.MouseOut:
                 AtkStage.Instance()->TooltipManager.HideTooltip(addonId);
                 break;
-        }
-    }
-
-    private void  RunClearArmouryChestCommand(List<GameInventoryType> inventoryTypeToClear)
-    {
-        foreach (var inventoryType in inventoryTypeToClear)
-        {
-            new ArmouryChestRemover(GameInventoryType: inventoryType,sheetsUtils: sheetsUtils).Execute();
         }
     }
 

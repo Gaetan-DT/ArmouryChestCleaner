@@ -1,23 +1,25 @@
-using Dalamud.IoC;
-using Dalamud.Plugin.Services;
-using FFXIVClientStructs.FFXIV.Client.Game.Fate;
+using ECommons.DalamudServices;
 using Lumina.Excel;
 using Lumina.Excel.Sheets;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ArmouryChestCleaner;
 
 public class SheetsUtils
 {
-    public readonly ExcelSheet<Lumina.Excel.Sheets.Item> sheetItem;
+    private static SheetsUtils? SSelf = null;
 
-    public SheetsUtils(IDataManager DataManager)
+    public static SheetsUtils GetOrCreate()
     {
-        sheetItem = DataManager.GetExcelSheet<Lumina.Excel.Sheets.Item>();
+        if (SSelf == null)
+            SSelf = new SheetsUtils();
+        return SSelf;
+    }
+
+    public readonly ExcelSheet<Item> sheetItem;
+
+    private SheetsUtils()
+    {
+        sheetItem = Svc.Data.GetExcelSheet<Item>();
     }
 
     public Item? GetItemInfoFromSheets(uint itemId)
@@ -29,5 +31,4 @@ public class SheetsUtils
             return null;
         return itemInfo;
     }
-
 }
