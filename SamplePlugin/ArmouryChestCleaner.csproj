@@ -2,8 +2,8 @@
 <Project Sdk="Dalamud.NET.SDK/11.0.0">
   <PropertyGroup>
     <Version>0.0.0.1</Version>
-    <Description>A sample plugin.</Description>
-    <PackageProjectUrl>https://github.com/goatcorp/SamplePlugin</PackageProjectUrl>
+    <Description>ArmouryChestCleaner</Description>
+    <PackageProjectUrl>https://github.com/Gaetan-DT/ArmouryChestCleaner</PackageProjectUrl>
     <PackageLicenseExpression>AGPL-3.0-or-later</PackageLicenseExpression>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
@@ -13,9 +13,14 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Visible>false</Visible>
     </Content>
+    <Content Include="repo.json" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\ECommons\ECommons\ECommons.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include=".github\workflows\build.yml" />
   </ItemGroup>
 </Project>

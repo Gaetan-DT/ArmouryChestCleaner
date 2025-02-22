@@ -4,7 +4,7 @@ using Dalamud.Plugin;
 using System.IO;
 using Dalamud.Interface.Windowing;
 using Dalamud.Plugin.Services;
-using SamplePlugin.Windows;
+using ArmouryChestCleaner.Windows;
 using Dalamud.Game.Inventory;
 using Lumina.Excel.Sheets;
 using System;
@@ -24,7 +24,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Intrinsics.Arm;
 using ECommons.Automation.UIInput;
 
-namespace SamplePlugin;
+namespace ArmouryChestCleaner;
 
 public sealed class Plugin : IDalamudPlugin
 {
@@ -48,7 +48,7 @@ public sealed class Plugin : IDalamudPlugin
 
     public Configuration Configuration { get; init; }
 
-    public readonly WindowSystem WindowSystem = new("SamplePlugin");
+    public readonly WindowSystem WindowSystem = new("ArmouryChestCleaner");
     private ConfigWindow ConfigWindow { get; init; }
     private MainWindow MainWindow { get; init; }
 

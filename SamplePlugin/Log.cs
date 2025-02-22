@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SamplePlugin
+namespace ArmouryChestCleaner
 {
     public static class Log
     {

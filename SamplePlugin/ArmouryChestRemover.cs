@@ -7,7 +7,7 @@ using Lumina.Excel.Sheets;
 using System;
 using System.Collections.Generic;
 
-namespace SamplePlugin
+namespace ArmouryChestCleaner
 {
     internal class ArmouryChestRemover
     {
