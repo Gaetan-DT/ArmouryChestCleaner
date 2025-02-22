@@ -5,7 +5,7 @@
   "InternalName": "ArmouryChestCleaner",
   "AssemblyVersion": "0.0.0.4",
   "TestingAssemblyVersion": "0.0.0.4",
-  "Description": "A plugin to run help cleaning armoury chest, see command for more information",
+  "Description": "A plugin to help cleaning armoury chest, see command for more information",
   "ApplicableVersion": "any",
   "RepoUrl": "https://github.com/Gaetan-DT/ArmouryChestCleaner",
   "Tags": [

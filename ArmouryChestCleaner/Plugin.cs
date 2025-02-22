@@ -80,8 +80,6 @@ public sealed class Plugin : IDalamudPlugin
 
         // Adds another button that is doing the same but for the main ui of the plugin
         PluginInterface.UiBuilder.OpenMainUi += ToggleMainUI;
-
-        AddonLifecycle.RegisterListener(AddonEvent.PostSetup, "MonsterNote", OnMonsterNotePostSetupTrigger);
     }
 
     public void Dispose()
@@ -162,38 +160,6 @@ public sealed class Plugin : IDalamudPlugin
         return inventoryTypeToClear.Count > 0;
     }
 
-    private unsafe void OnMonsterNotePostSetupTrigger(AddonEvent type, AddonArgs args)
-    {
-        PluginLog.Information("OnMonsterNotePostSetupTrigger");
-        AtkUnitBase* addon = (AtkUnitBase*)args.Addon;
-        AtkResNode* targetNode = addon->GetNodeById(22);
-        AtkResNode* dropDownList = addon->GetNodeById(38);
-        //dropDownList->ChildNode[1].ToggleVisibility(false);
-
-        var childNode = &dropDownList->ChildNode[1];
-        var foo = dropDownList->GetAsAtkComponentDropdownList()->UldManager.NodeList[1];
-
-        targetNode->NodeFlags |= NodeFlags.EmitsEvents | NodeFlags.RespondToMouse | NodeFlags.HasCollision;
-        foo->NodeFlags |= NodeFlags.EmitsEvents | NodeFlags.RespondToMouse | NodeFlags.HasCollision;
-
-        AddonEventManager.AddEvent((nint)addon, (nint)foo, AddonEventType.MouseOver, OnDropDownClick);
-
-        AddonEventManager.AddEvent((nint)addon, (nint)targetNode, AddonEventType.MouseOver, TooltipHandler);
-        AddonEventManager.AddEvent((nint)addon, (nint)targetNode, AddonEventType.MouseOut, TooltipHandler);
-
-        //var addon2 = (AtkUnitBase*)Svc.GameGui.GetAddonByName("MonsterNote");
-
-        PluginLog.Information("Sending event");
-        AtkEventType atkEventType = AtkEventType.MouseOver;
-
-        var evt = targetNode->AtkEventManager.Event;
-
-        var eventParam = (int)evt->Param;
-        var atkEvent = targetNode->AtkEventManager.Event;
-
-        addon->ReceiveEvent(atkEventType, eventParam, atkEvent);
-    }
-
     private unsafe void OnDropDownClick(AddonEventType type, IntPtr addon, IntPtr node)
     {
         PluginLog.Information($"OnDropDownClick call type={type} addon={addon} node={node}");
@@ -214,111 +180,6 @@ public sealed class Plugin : IDalamudPlugin
                 AtkStage.Instance()->TooltipManager.HideTooltip(addonId);
                 break;
         }
-    }
-
-    private unsafe void RunTestCommand()
-    {
-        /*
-        var addon = Svc.GameGui.GetAddonByName("MonsterNote");
-        if (addon == nint.Zero)
-        {
-            PluginLog.Information("Unable to find addon");
-            return;
-        }
-        AtkUnitBase* atkBase = (AtkUnitBase*)addon; // Addon
-        AtkResNode* node = atkBase->GetNodeById(38);
-        var foo = node->GetAsAtkComponentDropdownList()->UldManager.NodeList[1];
-        //node->ToggleVisibility(false);
-        PluginLog.Information("Sending event");
-        var btnRes = foo->GetComponent()->OwnerNode->AtkResNode;
-        var evt = (AtkEvent*)btnRes.AtkEventManager.Event;
-        atkBase->ReceiveEvent(AtkEventType.MouseClick, (int)evt->Param, btnRes.AtkEventManager.Event);
-        */
-    }
-
-    private unsafe void RunTestCommandYesNo()
-    {
-        var addon = Svc.GameGui.GetAddonByName("SelectYesno");
-        if (addon == nint.Zero)
-        {
-            PluginLog.Information("Unable to find addon");
-            return;
-        }
-        AddonSelectYesno* addonSelectYesno = (AddonSelectYesno*)addon;
-        AtkUnitBase * atkBase = (AtkUnitBase*)addon; // Addon
-        AtkComponentButton* yesButton = addonSelectYesno->YesButton; // Target
-
-        var btnRes = yesButton->AtkComponentBase.OwnerNode->AtkResNode;
-        var evt = (AtkEvent*)btnRes.AtkEventManager.Event;
-        atkBase->ReceiveEvent(evt->State.EventType, (int)evt->Param, btnRes.AtkEventManager.Event);
-    }
-
-    private unsafe void RunTestCommandInventory()
-    {
-        var addon = Svc.GameGui.GetAddonByName("InventoryGrid3E");
-        if (addon == nint.Zero)
-        {
-            PluginLog.Information("Unable to find addon");
-        }
-        else
-        {
-            PluginLog.Information("AddonInventoryGrid found");
-            AddonInventoryGrid* inventoryGrid3E = (AddonInventoryGrid*)addon;
-            AtkComponentDragDrop* srcSlot = inventoryGrid3E->Slots[0];
-            AtkComponentDragDrop* destSlot = inventoryGrid3E->Slots[11];
-            PluginLog.Information($"srcSlot -> OwnerNode NodeId:[{srcSlot->OwnerNode->NodeId}] Type:[{srcSlot->OwnerNode->Type}]");
-            PluginLog.Information($"srcSlot -> {srcSlot->GetIconId()}");
-            PluginLog.Information($"destSlot -> OwnerNode NodeId:[{destSlot->OwnerNode->NodeId}] Type:[{destSlot->OwnerNode->Type}]");
-            PluginLog.Information($"destSlot -> {destSlot->GetIconId()}");
-        }
-    }
-
-    private unsafe void RunTestCancelLogoutCommand()
-    {
-        ChatGui.Print("Hello test command");
-        PluginLog.Information("Hello world");
-        bool contains = false;
-        string stringParam = Svc.Data.GetExcelSheet<Addon>()?.GetRow(115).Text.ExtractText()!;
-        PluginLog.Information($"stringParam = {stringParam}");
-
-        AtkUnitBase* addon = null;
-
-        for (var i = 1; i < 100; i++)
-        {
-            try
-            {
-                addon = (AtkUnitBase*)Svc.GameGui.GetAddonByName("SelectYesno", i);
-                if (addon == null) break;//return null;
-                if(IsAddonReady(addon))
-                {
-                    var textNode = addon->UldManager.NodeList[15]->GetAsAtkTextNode();
-                    var text = GenericHelpers.ReadSeString(&textNode->NodeText).ExtractText().Replace(" ", "");
-                    PluginLog.Information($"text = {text}");
-
-                    if(contains ?
-                        text.ContainsAny(stringParam.Replace(" ", ""))
-                        : text.EqualsAny(stringParam.Replace(" ", ""))
-                        )
-                    {
-                        PluginLog.Information($"SelectYesno {stringParam.Print()} addon {i}");
-                        break;//return addon;
-                    }
-                }
-            }
-            catch(Exception e)
-            {
-                e.Log();
-                break; // return null;
-            }
-        }
-        if (addon != null)
-            new AddonMaster.SelectYesno((nint)addon).No();
-        //return null;
-    }
-
-    public unsafe static bool IsAddonReady(AtkUnitBase* Addon)
-    {
-        return Addon->IsVisible && Addon->UldManager.LoadedState == AtkLoadState.Loaded && Addon->IsFullyLoaded();
     }
 
     private void  RunClearArmouryChestCommand(List<GameInventoryType> inventoryTypeToClear)
