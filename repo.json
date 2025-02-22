@@ -1,24 +1,24 @@
 [
-    {
-        "Author": "RukkoSiT",
-        "Name": "Armoury Chest Cleaner",
-        "InternalName": "ArmouryChestCleaner",
-        "AssemblyVersion": "0.0.0.1",
-        "TestingAssemblyVersion": "0.0.0.1",
-        "Description": "A plugin to run help cleaning armoury chest, see command for more information",
-        "ApplicableVersion": "any",
-        "RepoUrl": "https://github.com/Gaetan-DT/ArmouryChestCleaner",
-        "Tags": [
-            "plugin"
-        ],
-        "DalamudApiLevel": 11,
-        "LoadPriority": 0,
-        "IconUrl": "https://raw.githubusercontent.com/marzent/IINACT/master/images/icon.png",
-        "Punchline": "A armoury cleaner plugin.",
-        "IsHide": "False",
-        "IsTestingExclusive": "False",
-        "DownloadLinkInstall": "https://github.com/marzent/IINACT/releases/download/v2.7.3.9/IINACT.zip",
-        "DownloadLinkTesting": "https://github.com/marzent/IINACT/releases/download/v2.7.3.9/IINACT.zip",
-        "DownloadLinkUpdate": "https://github.com/marzent/IINACT/releases/download/v2.7.3.9/IINACT.zip"
-    }
+{
+  "Author": "RukkoSiT",
+  "Name": "Armoury Chest Cleaner",
+  "InternalName": "ArmouryChestCleaner",
+  "AssemblyVersion": "0.0.0.2",
+  "TestingAssemblyVersion": "0.0.0.2",
+  "Description": "A plugin to run help cleaning armoury chest, see command for more information",
+  "ApplicableVersion": "any",
+  "RepoUrl": "https://github.com/Gaetan-DT/ArmouryChestCleaner",
+  "Tags": [
+    "plugin"
+  ],
+  "DalamudApiLevel": 11,
+  "LoadPriority": 0,
+  "IconUrl": "https://raw.githubusercontent.com/marzent/IINACT/master/images/icon.png",
+  "Punchline": "A armoury cleaner plugin.",
+  "IsHide": "False",
+  "IsTestingExclusive": "False",
+  "DownloadLinkInstall": "https://github.com/Gaetan-DT/ArmouryChestCleaner/releases/download/v0.0.0.2/ArmouryChestCleaner.zip",
+  "DownloadLinkTesting": "https://github.com/Gaetan-DT/ArmouryChestCleaner/releases/download/v0.0.0.2/ArmouryChestCleaner.zip",
+  "DownloadLinkUpdate": "https://github.com/Gaetan-DT/ArmouryChestCleaner/releases/download/v0.0.0.2/ArmouryChestCleaner.zip"
+}
 ]
