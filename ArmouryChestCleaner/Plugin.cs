@@ -21,14 +21,6 @@ public sealed class Plugin : IDalamudPlugin
     [PluginService] internal static IDalamudPluginInterface PluginInterface { get; private set; } = null!;
     [PluginService] internal static ITextureProvider TextureProvider { get; private set; } = null!;
     [PluginService] internal static ICommandManager CommandManager { get; private set; } = null!;
-    [PluginService] internal static IPluginLog PluginManager { get; private set; } = null!;
-    [PluginService] internal static IChatGui ChatGui { get; private set; } = null!;
-    [PluginService] internal static IGameInventory GameInventory { get; private set; } = null!;
-    [PluginService] internal static IClientState ClientState { get; private set; } = null!;
-    [PluginService] internal static IDataManager DataManager { get; private set; } = null!;
-    [PluginService] internal static IPluginLog Log { get; private set; } = null!;
-    [PluginService] internal static IAddonEventManager AddonEventManager { get; private set; } = null!;
-    [PluginService] internal static IAddonLifecycle AddonLifecycle { get; private set; } = null!;
 
     public Configuration Configuration { get; init; }
 
@@ -76,28 +68,6 @@ public sealed class Plugin : IDalamudPlugin
 
         CommandHelper.DisposeCommands(CommandManager, commandsList);
         commandsList = [];
-    }
-
-    private unsafe void OnDropDownClick(AddonEventType type, IntPtr addon, IntPtr node)
-    {
-        PluginLog.Information($"OnDropDownClick call type={type} addon={addon} node={node}");
-    }
-
-    private unsafe void TooltipHandler(AddonEventType type, IntPtr addon, IntPtr node)
-    {
-        //PluginLog.Information("Receiving event TooltipHandler");
-        var addonId = ((AtkUnitBase*)addon)->Id;
-
-        switch (type)
-        {
-            case AddonEventType.MouseOver:
-                AtkStage.Instance()->TooltipManager.ShowTooltip(addonId, (AtkResNode*)node, "This is a tooltip.");
-                break;
-
-            case AddonEventType.MouseOut:
-                AtkStage.Instance()->TooltipManager.HideTooltip(addonId);
-                break;
-        }
     }
 
     private void DrawUI() => WindowSystem.Draw();
