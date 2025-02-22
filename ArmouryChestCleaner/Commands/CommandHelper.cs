@@ -9,7 +9,7 @@ namespace ArmouryChestCleaner.Commands
         {
             return
             [
-                new ClearAM()
+                new ClearAMCommand()
             ];
         }
 

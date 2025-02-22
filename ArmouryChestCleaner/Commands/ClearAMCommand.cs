@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace ArmouryChestCleaner.Commands
 {
-    public class ClearAM: ICommand
+    public class ClearAMCommand: ICommand
     {
         public const string CommandName = "/clearam";
         public const string CommandUsage = $"Usage: {CommandName} <all|mainhand|head|body|hands|legs|feets|ear|neck|wrist|rings>";
