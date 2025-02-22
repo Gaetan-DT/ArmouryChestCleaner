@@ -13,8 +13,21 @@ namespace ArmouryChestCleaner.Commands
 {
     public class ClearAMCommand: ICommand
     {
-        public const string CommandName = "/clearam";
-        public const string CommandUsage = $"Usage: {CommandName} <all|mainhand|head|body|hands|legs|feets|ear|neck|wrist|rings>";
+        private const string CommandName = "/clearam";
+        private const string CommandUsage = $"Usage: {CommandName} <{CommandArgAll}|{CommandArgMainHand}|{CommandArgHead}|{CommandArgBody}|" +
+            $"{CommandArgHands}|{CommandArgLegs}|{CommandArgFeets}|{CommandArgEar}|{CommandArgNeck}|{CommandArgWrist}|{CommandArgRings}>";
+        private const string CommandArgAll = "all";
+        private const string CommandArgMainHand = "mainhand";
+        private const string CommandArgHead = "head";
+        private const string CommandArgBody = "body";
+        private const string CommandArgHands = "hands";
+        private const string CommandArgLegs = "legs";
+        private const string CommandArgFeets = "feets";
+        private const string CommandArgEar = "ear";
+        private const string CommandArgNeck = "neck";
+        private const string CommandArgWrist = "wrist";
+        private const string CommandArgRings = "rings";
+
 
         private readonly ArmouryChestRemoverUseCase armouryChestRemoverUseCase = new();
 
@@ -59,19 +72,19 @@ namespace ArmouryChestCleaner.Commands
             inventoryTypeToClear = new List<GameInventoryType>();
             var mapArgInventoryType = new Dictionary<string, GameInventoryType>()
         {
-            { "mainhand", GameInventoryType.ArmoryMainHand },
-            { "head", GameInventoryType.ArmoryHead },
-            { "body", GameInventoryType.ArmoryBody },
-            { "hands", GameInventoryType.ArmoryHands },
-            { "legs", GameInventoryType.ArmoryLegs },
-            { "feets", GameInventoryType.ArmoryFeets },
-            { "ear", GameInventoryType.ArmoryEar },
-            { "neck", GameInventoryType.ArmoryNeck },
-            { "wrist", GameInventoryType.ArmoryWrist },
-            { "rings", GameInventoryType.ArmoryRings }
+            { CommandArgMainHand, GameInventoryType.ArmoryMainHand },
+            { CommandArgHead, GameInventoryType.ArmoryHead },
+            { CommandArgBody, GameInventoryType.ArmoryBody },
+            { CommandArgHands, GameInventoryType.ArmoryHands },
+            { CommandArgLegs, GameInventoryType.ArmoryLegs },
+            { CommandArgFeets, GameInventoryType.ArmoryFeets },
+            { CommandArgEar, GameInventoryType.ArmoryEar },
+            { CommandArgNeck, GameInventoryType.ArmoryNeck },
+            { CommandArgWrist, GameInventoryType.ArmoryWrist },
+            { CommandArgRings, GameInventoryType.ArmoryRings }
         };
 
-            if (args.Contains("all"))
+            if (args.Contains(CommandArgAll))
             {
                 inventoryTypeToClear.Add(GameInventoryType.ArmoryMainHand);
                 inventoryTypeToClear.Add(GameInventoryType.ArmoryHead);
