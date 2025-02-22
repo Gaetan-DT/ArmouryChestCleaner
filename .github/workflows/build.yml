@@ -29,7 +29,7 @@ jobs:
     - name: Prepare Build Artifact
       shell: pwsh
       run: |
-        Copy-Item "ArmouryChestCleaner/bin/Release/win-x64/ArmouryChestCleaner/latest.zip" -Destination "ArmouryChestCleaner.zip"
+        Copy-Item "ArmouryChestCleaner/bin/x64/Release/ArmouryChestCleaner/latest.zip" -Destination "ArmouryChestCleaner.zip"
         Expand-Archive -Force ArmouryChestCleaner.zip Artifact
     - name: Upload ArmouryChestCleaner
       uses: actions/upload-artifact@v4
@@ -40,7 +40,7 @@ jobs:
       shell: pwsh
       run: |
         $repo = Get-Content 'repo.json' -raw | ConvertFrom-Json
-        $build = Get-Content 'ArmouryChestCleaner/bin/Release/win-x64/ArmouryChestCleaner/ArmouryChestCleaner.json' -raw | ConvertFrom-Json
+        $build = Get-Content 'ArmouryChestCleaner/bin/x64/Release/ArmouryChestCleaner/ArmouryChestCleaner.json' -raw | ConvertFrom-Json
         if ($repo.AssemblyVersion -eq $build.AssemblyVersion) {
           Exit
         }
