@@ -69,7 +69,7 @@ public sealed class Plugin : IDalamudPlugin
 
         CommandManager.AddHandler(CommandName, new CommandInfo(OnCommand)
         {
-            HelpMessage = "A useful message to display in /xlhelp"
+            HelpMessage = "Usage: /clearam <all|mainhand|head|body|hands|legs|feets|ear|neck|wrist|rings>"
         });
 
         PluginInterface.UiBuilder.Draw += DrawUI;
