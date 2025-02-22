@@ -1,3 +1,4 @@
+using ArmouryChestCleaner.UseCases;
 using Dalamud.Game.Command;
 using Dalamud.Game.Inventory;
 using Dalamud.Plugin.Services;
@@ -101,7 +102,7 @@ namespace ArmouryChestCleaner.Commands
             var sheetsUtils = SheetsUtils.GetOrCreate();
             foreach (var inventoryType in inventoryTypeToClear)
             {
-                new ArmouryChestRemover(GameInventoryType: inventoryType, sheetsUtils: sheetsUtils).Execute();
+                new ArmouryChestRemoverUseCase(GameInventoryType: inventoryType, sheetsUtils: sheetsUtils).Execute();
             }
         }
     }

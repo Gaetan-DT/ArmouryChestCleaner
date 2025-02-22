@@ -7,14 +7,14 @@ using Lumina.Excel.Sheets;
 using System;
 using System.Collections.Generic;
 
-namespace ArmouryChestCleaner
+namespace ArmouryChestCleaner.UseCases
 {
-    internal class ArmouryChestRemover
+    class ArmouryChestRemoverUseCase
     {
         private readonly GameInventoryType gameInventoryTypeToClear;
         private readonly SheetsUtils sheetsUtils;
 
-        public ArmouryChestRemover(GameInventoryType GameInventoryType,SheetsUtils sheetsUtils)
+        public ArmouryChestRemoverUseCase(GameInventoryType GameInventoryType,SheetsUtils sheetsUtils)
         {
             gameInventoryTypeToClear = GameInventoryType;
             this.sheetsUtils = sheetsUtils;
@@ -22,12 +22,12 @@ namespace ArmouryChestCleaner
 
         public bool Execute()
         {
-            List<GameInventoryItem> armoryItemList = GetArmoryItem();
-            List<uint> gearSetItemList = GetGearSetItemList();
+            var armoryItemList = GetArmoryItem();
+            var gearSetItemList = GetGearSetItemList();
             Log.LogInfo($"For Armoury:[{gameInventoryTypeToClear}], " +
                 $"Item found in armoury:[{armoryItemList.Count}], " +
                 $"Item found in gear set:[{gearSetItemList.Count}]");
-            List<GameInventoryItem> amouryItemInGearSetIdList = GetItemIdNotInGearSet(armoryItemList, gearSetItemList);
+            var amouryItemInGearSetIdList = GetItemIdNotInGearSet(armoryItemList, gearSetItemList);
             Log.LogInfo($"For Armoury:[{gameInventoryTypeToClear}]: Found [{amouryItemInGearSetIdList.Count}] item(s) in Gear Set");
             PrintListItemIdAsItem(amouryItemInGearSetIdList);
 
@@ -101,7 +101,7 @@ namespace ArmouryChestCleaner
                         var equipSlotCategory = sheetsItem?.EquipSlotCategory.Value;
                         var gameInventoryType = sheetsItem?.EquipSlotCategory.Value.ToGameInventoryTypeOrNull();
                         //chatGui?.Print($"[{gearSetEntry.NameString}] [{entryItem.ItemId}] [{sheetsItem?.Name}] [{equipSlotCategory?.RowId}] [{gameInventoryType}]");
-                        if (gameInventoryType == this.gameInventoryTypeToClear)
+                        if (gameInventoryType == gameInventoryTypeToClear)
                         {
                             listItemIdForInventoryType.Add(entryItem.ItemId.NormalizeItemId());
                                 if (gameInventoryType != GameInventoryType.ArmoryRings)
@@ -119,13 +119,13 @@ namespace ArmouryChestCleaner
                 ?.Name.ToString() 
                 ?? gameInventoryItem.ItemId.ToString();
             Log.LogDebug($"Move itemId {itemNameStr}");
-            GameInventoryItem? freeGameInventoryItem = Utils.GetFreeAvailableInventoryItemId();
+            var freeGameInventoryItem = Utils.GetFreeAvailableInventoryItemId();
             if (freeGameInventoryItem == null)
             {
                 Log.LogDebug($"No free inventory slot");
                 return false;
             }
-            uint freeGameInventoryItemSlotId = ((GameInventoryItem)freeGameInventoryItem).InventorySlot;
+            var freeGameInventoryItemSlotId = ((GameInventoryItem)freeGameInventoryItem).InventorySlot;
             var freeGameInventoryItemType = ((GameInventoryItem)freeGameInventoryItem).ContainerType.ToInventoryTypeOrThrow();
             InventoryManager.Instance()->MoveItemSlot(
                 srcContainer: gameInventoryTypeToClear.ToInventoryTypeOrThrow(),
