@@ -3,8 +3,8 @@
   "Author": "RukkoSiT",
   "Name": "Armoury Chest Cleaner",
   "InternalName": "ArmouryChestCleaner",
-  "AssemblyVersion": "0.0.0.4",
-  "TestingAssemblyVersion": "0.0.0.4",
+  "AssemblyVersion": "0.0.0.5",
+  "TestingAssemblyVersion": "0.0.0.5",
   "Description": "A plugin to help cleaning armoury chest, see command for more information",
   "ApplicableVersion": "any",
   "RepoUrl": "https://github.com/Gaetan-DT/ArmouryChestCleaner",
@@ -17,8 +17,8 @@
   "Punchline": "A armoury cleaner plugin.",
   "IsHide": "False",
   "IsTestingExclusive": "False",
-  "DownloadLinkInstall": "https://github.com/Gaetan-DT/ArmouryChestCleaner/releases/download/v0.0.0.4/ArmouryChestCleaner.zip",
-  "DownloadLinkTesting": "https://github.com/Gaetan-DT/ArmouryChestCleaner/releases/download/v0.0.0.4/ArmouryChestCleaner.zip",
-  "DownloadLinkUpdate": "https://github.com/Gaetan-DT/ArmouryChestCleaner/releases/download/v0.0.0.4/ArmouryChestCleaner.zip"
+  "DownloadLinkInstall": "https://github.com/Gaetan-DT/ArmouryChestCleaner/releases/download/v0.0.0.5/ArmouryChestCleaner.zip",
+  "DownloadLinkTesting": "https://github.com/Gaetan-DT/ArmouryChestCleaner/releases/download/v0.0.0.5/ArmouryChestCleaner.zip",
+  "DownloadLinkUpdate": "https://github.com/Gaetan-DT/ArmouryChestCleaner/releases/download/v0.0.0.5/ArmouryChestCleaner.zip"
 }
 ]
