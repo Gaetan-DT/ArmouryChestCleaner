@@ -1,24 +1,24 @@
 [
-    {
-        "Author": "RukkoSiT",
-        "Name": "Armoury Chest Cleaner",
-        "InternalName": "ArmouryChestCleaner",
-        "AssemblyVersion": "0.0.0.2",
-        "TestingAssemblyVersion": "0.0.0.2",
-        "Description": "A plugin to run help cleaning armoury chest, see command for more information",
-        "ApplicableVersion": "any",
-        "RepoUrl": "https://github.com/Gaetan-DT/ArmouryChestCleaner",
-        "Tags": [
-            "plugin"
-        ],
-        "DalamudApiLevel": 11,
-        "LoadPriority": 0,
-        "IconUrl": "https://raw.githubusercontent.com/Gaetan-DT/ArmouryChestCleaner/main/Data/goat.png",
-        "Punchline": "A armoury cleaner plugin.",
-        "IsHide": "False",
-        "IsTestingExclusive": "False",
-        "DownloadLinkInstall": "https://github.com/Gaetan-DT/ArmouryChestCleaner/releases/download/v0.0.0.2/ArmouryChestCleaner.zip",
-        "DownloadLinkTesting": "https://github.com/Gaetan-DT/ArmouryChestCleaner/releases/download/v0.0.0.2/ArmouryChestCleaner.zip",
-        "DownloadLinkUpdate": "https://github.com/Gaetan-DT/ArmouryChestCleaner/releases/download/v0.0.0.2/ArmouryChestCleaner.zip"
-    }
+{
+  "Author": "RukkoSiT",
+  "Name": "Armoury Chest Cleaner",
+  "InternalName": "ArmouryChestCleaner",
+  "AssemblyVersion": "0.0.0.3",
+  "TestingAssemblyVersion": "0.0.0.3",
+  "Description": "A plugin to run help cleaning armoury chest, see command for more information",
+  "ApplicableVersion": "any",
+  "RepoUrl": "https://github.com/Gaetan-DT/ArmouryChestCleaner",
+  "Tags": [
+    "plugin"
+  ],
+  "DalamudApiLevel": 11,
+  "LoadPriority": 0,
+  "IconUrl": "https://raw.githubusercontent.com/Gaetan-DT/ArmouryChestCleaner/main/Data/goat.png",
+  "Punchline": "A armoury cleaner plugin.",
+  "IsHide": "False",
+  "IsTestingExclusive": "False",
+  "DownloadLinkInstall": "https://github.com/Gaetan-DT/ArmouryChestCleaner/releases/download/v0.0.0.3/ArmouryChestCleaner.zip",
+  "DownloadLinkTesting": "https://github.com/Gaetan-DT/ArmouryChestCleaner/releases/download/v0.0.0.3/ArmouryChestCleaner.zip",
+  "DownloadLinkUpdate": "https://github.com/Gaetan-DT/ArmouryChestCleaner/releases/download/v0.0.0.3/ArmouryChestCleaner.zip"
+}
 ]
