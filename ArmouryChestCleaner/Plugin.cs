@@ -6,23 +6,12 @@ using Dalamud.Interface.Windowing;
 using Dalamud.Plugin.Services;
 using ArmouryChestCleaner.Windows;
 using Dalamud.Game.Inventory;
-using Lumina.Excel.Sheets;
 using System;
 using System.Collections.Generic;
 using ECommons.Logging;
 using ECommons;
-using ECommons.DalamudServices;
 using FFXIVClientStructs.FFXIV.Component.GUI;
-using ECommons.UIHelpers.AddonMasterImplementations;
-using FFXIVClientStructs.FFXIV.Client.UI;
-using Dalamud.Game.Addon.Lifecycle;
-using Dalamud.Game.Addon.Lifecycle.AddonArgTypes;
 using Dalamud.Game.Addon.Events;
-using static FFXIVClientStructs.FFXIV.Client.UI.AddonRelicNoteBook;
-using FFXIVClientStructs.FFXIV.Client.UI.Agent;
-using System.Runtime.InteropServices;
-using System.Runtime.Intrinsics.Arm;
-using ECommons.Automation.UIInput;
 
 namespace ArmouryChestCleaner;
 
